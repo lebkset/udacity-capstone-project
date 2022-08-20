@@ -1,5 +1,5 @@
 # Overview
-I had based on project 4 for : develop and deploy serverless app create, get and update information
+I had based on project 4 : develop and deploy serverless app create, get and update information
 
 # Run local on browser
 cd to /client folder
