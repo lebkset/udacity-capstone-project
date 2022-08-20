@@ -38,9 +38,8 @@ Get list images by User:
 
 
 # API endpoint
-GET - https://kevy8v1g5f.execute-api.us-east-2.amazonaws.com/dev/todos
-POST - https://kevy8v1g5f.execute-api.us-east-2.amazonaws.com/dev/todos
-PATCH - https://kevy8v1g5f.execute-api.us-east-2.amazonaws.com/dev/todos/{todoId}
-DELETE - https://kevy8v1g5f.execute-api.us-east-2.amazonaws.com/dev/todos/{todoId}
-POST - https://kevy8v1g5f.execute-api.us-east-2.amazonaws.com/dev/todos/{todoId}/attachment
-functions:
+- GET - https://kevy8v1g5f.execute-api.us-east-2.amazonaws.com/dev/todos
+- POST - https://kevy8v1g5f.execute-api.us-east-2.amazonaws.com/dev/todos
+- PATCH - https://kevy8v1g5f.execute-api.us-east-2.amazonaws.com/dev/todos/{todoId}
+- DELETE - https://kevy8v1g5f.execute-api.us-east-2.amazonaws.com/dev/todos/{todoId}
+- POST - https://kevy8v1g5f.execute-api.us-east-2.amazonaws.com/dev/todos/{todoId}/attachment
