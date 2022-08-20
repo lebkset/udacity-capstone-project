@@ -4,14 +4,14 @@ import update from 'immutability-helper'
 import * as React from 'react'
 import {
   Button,
-  Checkbox,
   Divider,
   Grid,
   Header,
   Icon,
   Input,
   Image,
-  Loader
+  Loader,
+  Checkbox
 } from 'semantic-ui-react'
 
 import { createTodo, deleteTodo, getTodos, patchTodo } from '../api/todos-api'
@@ -27,33 +27,41 @@ interface TodosState {
   todos: Todo[]
   newTodoName: string
   loadingTodos: boolean
+  information: string
 }
 
 export class Todos extends React.PureComponent<TodosProps, TodosState> {
   state: TodosState = {
     todos: [],
     newTodoName: '',
-    loadingTodos: true
+    loadingTodos: true,
+    information: ''
   }
 
   handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ newTodoName: event.target.value })
   }
 
+  handleInformationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ information: event.target.value })
+  }
+
   onEditButtonClick = (todoId: string) => {
     this.props.history.push(`/todos/${todoId}/edit`)
   }
 
-  onTodoCreate = async (event: React.ChangeEvent<HTMLButtonElement>) => {
+  onTodoCreate = async () => {
     try {
       const dueDate = this.calculateDueDate()
       const newTodo = await createTodo(this.props.auth.getIdToken(), {
         name: this.state.newTodoName,
-        dueDate
+        dueDate,
+        information: this.state.information,
       })
       this.setState({
         todos: [...this.state.todos, newTodo],
-        newTodoName: ''
+        newTodoName: '',
+        information: ''
       })
     } catch {
       alert('Todo creation failed')
@@ -104,7 +112,7 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
   render() {
     return (
       <div>
-        <Header as="h1">TODOs</Header>
+        <Header as="h1">Images</Header>
 
         {this.renderCreateTodoInput()}
 
@@ -117,18 +125,22 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
     return (
       <Grid.Row>
         <Grid.Column width={16}>
+          <Button onClick={this.onTodoCreate} color='teal'><Icon name='add' />Add</Button>
           <Input
-            action={{
-              color: 'teal',
-              labelPosition: 'left',
-              icon: 'add',
-              content: 'New task',
-              onClick: this.onTodoCreate
-            }}
-            fluid
-            actionPosition="left"
-            placeholder="To change the world..."
+            style={{ marginLeft: 16 }}
+            label={{ icon: 'asterisk' }}
+            labelPosition='left corner'
+            placeholder='Name'
             onChange={this.handleNameChange}
+            value={this.state.newTodoName}
+          />
+          <Input
+            style={{ marginLeft: 8, marginRight: 8 }}
+            // label={{ icon: 'asterisk' }}
+            labelPosition='left corner'
+            placeholder='Information'
+            onChange={this.handleInformationChange}
+            value={this.state.information}
           />
         </Grid.Column>
         <Grid.Column width={16}>
@@ -168,8 +180,14 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
                   checked={todo.done}
                 />
               </Grid.Column>
-              <Grid.Column width={10} verticalAlign="middle">
+              <Grid.Column width={1} verticalAlign="middle">
                 {todo.name}
+              </Grid.Column>
+              {todo.attachmentUrl && (
+                <Image src={todo.attachmentUrl} size="small" wrapped />
+              )}
+              <Grid.Column width={5} verticalAlign="middle">
+                {todo.information}
               </Grid.Column>
               <Grid.Column width={3} floated="right">
                 {todo.dueDate}
@@ -192,9 +210,6 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
                   <Icon name="delete" />
                 </Button>
               </Grid.Column>
-              {todo.attachmentUrl && (
-                <Image src={todo.attachmentUrl} size="small" wrapped />
-              )}
               <Grid.Column width={16}>
                 <Divider />
               </Grid.Column>
