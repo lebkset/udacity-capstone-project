@@ -2,10 +2,10 @@
 I had based on project 4 : develop and deploy serverless app create, get and update information
 
 # Run local on browser
-cd to /client folder
-npm install
-npm start
-open http://localhost:3000/
+- cd to /client folder
+- npm install
+- npm start
+- open http://localhost:3000/
 
 # TEST API WITH POSTMAN
 import file (Final Project.postman_collection.json) into postman (update region from us-east-1 to us-east-2 and update {{apiId}}: kevy8v1g5f )
