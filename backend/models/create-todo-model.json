@@ -9,6 +9,9 @@
     },
     "dueDate": {
       "type": "string"
+    },
+    "information": {
+      "type": "string"
     }
   },
   "required": [
